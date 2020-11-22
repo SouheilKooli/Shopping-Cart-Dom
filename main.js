@@ -1,48 +1,63 @@
-$('.minus-btn').on('click', function(e) {
-  e.preventDefault();
-  var $this = $(this);
-  var $input = $this.closest('div').find('input');
-  var value = parseInt($input.val());
+// + Button
+let plusBtn = document.getElementsByClassName('btn-plus');
+for (let plus of plusBtn) {
+  plus.addEventListener('click', function () {
+    plus.previousElementSibling.innerText++;
 
-  if (value > 1) {
-    value = value - 1;
-  } else {
-    value = 0;
-  }
-
-  $input.val(value);
-
-});
-
-$('.plus-btn').on('click', function(e) {
-  e.preventDefault();
-  var $this = $(this);
-  var $input = $this.closest('div').find('input');
-  var value = parseInt($input.val());
-
-  if (value < 100) {
-    value = value + 1;
-  } else {
-    value =100;
-  }
-
-  $input.val(value);
-});
-
-$('.like-btn').on('click', function() {
-  $(this).toggleClass('is-active');
-});
+    totalPrice();
+  });
+}
 
 
+
+
+//- button
+let minusBtn = document.getElementsByClassName('btn-moins');
+for (let minus of minusBtn) {
+  minus.addEventListener('click', function () {
+    if (minus.nextElementSibling.innerText > 0) {
+      minus.nextElementSibling.innerText--;
+    }
+
+    totalPrice();
+  });
+}
+
+
+
+
+// total
 function totalPrice() {
-  // Get the product price
-  let productPrice = document.getElementsByClassName('total-price');
-  // Get the product quantity
+  let productPrice = document.getElementsByClassName('prx');
   let productQuantity = document.getElementsByClassName('quantity');
-  // Initilize the sum
   let sum = 0;
   for (let i = 0; i < productPrice.length; i++) {
     sum += productPrice[i].innerText * productQuantity[i].innerText;
   }
   document.getElementById('prix-total').innerText = sum;
+}
+
+
+
+
+// Delete
+let deleteBtn = document.querySelectorAll('.btn-delete');
+for (let i = 0; i < deleteBtn.length; i++) {
+  deleteBtn[i].addEventListener('click', function () {
+    deleteBtn[i].parentElement.parentElement.remove();
+
+    totalPrice();
+  });
+}
+// like 
+let likeBtn = document.querySelectorAll('.btn-like');
+let heartIcon = document.querySelectorAll('.like');
+for (let i = 0; i < likeBtn.length; i++) {
+  likeBtn[i].addEventListener('click', function () {
+    if (heartIcon[i].style.fill === 'black') {
+      heartIcon[i].style.fill = '#2da345';
+    } else {
+      heartIcon[i].style.fill = 'black';
+    }
+  });
 }
